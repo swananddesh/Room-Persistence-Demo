@@ -54,6 +54,7 @@ public class NotesListActivity extends AppCompatActivity implements NotesRecycle
         for (int index = 0; index < 20; index++) {
             Note note = new Note();
             note.setTitle("Title #" + index);
+            note.setContent("Content #" + index);
             note.setTimestamp("Jul 2019");
             notes.add(note);
         }

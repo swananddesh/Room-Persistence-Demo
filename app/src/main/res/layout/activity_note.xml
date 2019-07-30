@@ -13,17 +13,23 @@
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"/>
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary">
+
+            <include
+                layout="@layout/layout_note_toolbar"/>
+
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <EditText
+    <com.stalwart.notes.customview.LinedEditText
         android:id="@+id/note_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="@dimen/sp_17"
         android:textColor="@color/black"
-        android:padding="@dimen/dp_5"/>
+        android:padding="@dimen/dp_5"
+        android:gravity="top"/>
 
 </LinearLayout>

@@ -17,7 +17,7 @@ public class Note implements Parcelable {
     public Note() {
     }
 
-    protected Note(Parcel in) {
+    private Note(Parcel in) {
         title = in.readString();
         content = in.readString();
         timestamp = in.readString();
