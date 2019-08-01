@@ -1,12 +1,16 @@
 package com.stalwart.notes.activity;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.View;
 
 import com.stalwart.notes.R;
 import com.stalwart.notes.adapters.NotesRecyclerAdapter;
@@ -32,7 +36,9 @@ public class NotesListActivity extends AppCompatActivity implements NotesRecycle
         setContentView(R.layout.activity_notes_list);
 
         notesRecyclerView = findViewById(R.id.noteRecyclerView);
+        FloatingActionButton fabAddNote = findViewById(R.id.fav_add_note);
 
+        fabAddNote.setOnClickListener(new AddNoteClickListener());
         initRecyclerView();
         insertFakeNotes();
 
@@ -46,6 +52,7 @@ public class NotesListActivity extends AppCompatActivity implements NotesRecycle
         notesRecyclerView.setLayoutManager(layoutManager);
         VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(20);
         notesRecyclerView.addItemDecoration(itemDecorator);
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(notesRecyclerView);
         notesAdapter = new NotesRecyclerAdapter(notes, this);
         notesRecyclerView.setAdapter(notesAdapter);
     }
@@ -67,5 +74,31 @@ public class NotesListActivity extends AppCompatActivity implements NotesRecycle
         Intent intent = new Intent(this, NoteActivity.class);
         intent.putExtra("selected_note", notes.get(position));
         startActivity(intent);
+    }
+
+    private void deleteNote(Note note) {
+        notes.remove(note);
+        notesAdapter. notifyDataSetChanged();
+    }
+
+    private ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+            deleteNote(notes.get(viewHolder.getAdapterPosition()));
+        }
+    };
+
+    private class AddNoteClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(NotesListActivity.this, NoteActivity.class);
+            startActivity(intent);
+        }
     }
 }
