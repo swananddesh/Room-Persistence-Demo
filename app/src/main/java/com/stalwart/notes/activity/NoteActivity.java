@@ -2,7 +2,8 @@ package com.stalwart.notes.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -242,5 +243,20 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
             view = new View(this);
         }
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("mode", mode);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mode = savedInstanceState.getInt("mode");
+        if (mode == EDIT_MODE_ENABLED) {
+            enableEditMode();
+        }
     }
 }

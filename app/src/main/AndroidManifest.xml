@@ -20,8 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.NoteActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.NoteActivity"/>
     </application>
 
 </manifest>
