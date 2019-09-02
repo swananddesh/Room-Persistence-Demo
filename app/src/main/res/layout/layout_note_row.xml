@@ -18,7 +18,7 @@
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/note_title"
-        android:textSize="@dimen/sp_23"
+        android:textSize="@dimen/sp_17"
         android:layout_weight="75"
         android:textColor="#000"
         android:lines="1"
@@ -33,7 +33,7 @@
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/note_timestamp"
-        android:textSize="@dimen/sp_17"
+        android:textSize="@dimen/sp_14"
         android:layout_weight="20"
         android:padding="@dimen/dp_10" />
 

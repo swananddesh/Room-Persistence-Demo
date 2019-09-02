@@ -48,7 +48,6 @@ public class NotesListActivity extends AppCompatActivity implements NotesRecycle
         fabAddNote.setOnClickListener(new AddNoteClickListener());
         initRecyclerView();
         retrieveNotes();
-//        insertFakeNotes();
 
         Toolbar notesToolbar = findViewById(R.id.notes_toolbar);
         setSupportActionBar(notesToolbar);
@@ -72,7 +71,7 @@ public class NotesListActivity extends AppCompatActivity implements NotesRecycle
                 if (noteList != null && noteList.size() > 0) {
                     noteList.clear();
                 }
-                if (notes != null) {
+                if (notes != null && noteList != null) {
                     noteList.addAll(notes);
                 }
                 notesAdapter.notifyDataSetChanged();
@@ -80,16 +79,6 @@ public class NotesListActivity extends AppCompatActivity implements NotesRecycle
         });
     }
 
-    private void insertFakeNotes() {
-        for (int index = 0; index < 20; index++) {
-            Note note = new Note();
-            note.setTitle("Title #" + index);
-            note.setContent("Content #" + index);
-            note.setTimestamp("Jul 2019");
-            noteList.add(note);
-        }
-        notesAdapter.notifyDataSetChanged();
-    }
 
     @Override
     public void onNoteClick(int position) {
@@ -102,6 +91,8 @@ public class NotesListActivity extends AppCompatActivity implements NotesRecycle
     private void deleteNote(Note note) {
         noteList.remove(note);
         notesAdapter. notifyDataSetChanged();
+
+        noteRepository.deleteNoteTask(note);
     }
 
     private ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {

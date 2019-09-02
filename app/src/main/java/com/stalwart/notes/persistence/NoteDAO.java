@@ -15,14 +15,14 @@ import java.util.List;
 public interface NoteDAO {
 
     @Insert
-    long[] insertNotes(Note... notes);
+    void insertNotes(Note... notes);
 
     @Query("SELECT * FROM notes")
     LiveData<List<Note>> getNotes();
 
     @Delete
-    int delete(Note... notes);
+    void delete(Note... notes);
 
     @Update
-    int update(Note... notes);
+    void update(Note... notes);
 }

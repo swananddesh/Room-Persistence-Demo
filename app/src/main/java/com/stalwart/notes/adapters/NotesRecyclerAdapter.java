@@ -2,6 +2,9 @@ package com.stalwart.notes.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +12,16 @@ import android.widget.TextView;
 
 import com.stalwart.notes.R;
 import com.stalwart.notes.models.Note;
+import com.stalwart.notes.utils.DateUtil;
 
 import java.util.ArrayList;
+
 
 public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdapter.NoteHolder> {
 
     private ArrayList<Note> notes;
     private OnNoteListener onNoteListener;
+    private static final String TAG = "NotesRecyclerAdapter";
 
     public NotesRecyclerAdapter(ArrayList<Note> notes, OnNoteListener onNoteListener) {
         this.notes = notes;
@@ -28,11 +34,22 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
         return new NoteHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_note_row, viewGroup, false), onNoteListener);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull NoteHolder noteHolder, int position) {
         if (notes != null && !notes.isEmpty()) {
-            noteHolder.noteTitle.setText(notes.get(position).getTitle());
-            noteHolder.noteTimestamp.setText(notes.get(position).getTimestamp());
+            try {
+                String month = notes.get(position).getTimestamp().substring(0, 2);
+                month = DateUtil.getMonthFromNumber(month);
+                String year = notes.get(position).getTimestamp().substring(3);
+
+                noteHolder.noteTitle.setText(notes.get(position).getTitle());
+                noteHolder.noteTimestamp.setText(month + " " + year);
+
+            }catch (NullPointerException ex) {
+                Log.d(TAG, "onBindViewHolder: Null Pointer Exception" + ex.getMessage());
+            }
+
         }
     }
 
