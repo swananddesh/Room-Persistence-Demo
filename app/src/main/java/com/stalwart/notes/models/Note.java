@@ -86,16 +86,6 @@ public class Note implements Parcelable {
     }
 
     @Override
-    public String toString() {
-        return "Note{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", timestamp='" + timestamp + '\'' +
-                '}';
-    }
-
-    @Override
     public int describeContents() {
         return 0;
     }
